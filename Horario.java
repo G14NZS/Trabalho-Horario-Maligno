@@ -1,16 +1,5 @@
 import java.util.*;
 
-
-public class Main
-{
-    public static void main(String[] args) {
-        Horario criaHorario = new Horario ((byte)22, (byte)42, (byte)50);
-        System.out.println(criaHorario);
-    }  
-}
-
-
-
 public class Horario
 {
     private byte hora, minuto, segundo;
@@ -23,47 +12,42 @@ public class Horario
         this.setMinuto(minuto);
         this.setSegundo(segundo);
 
-        //Horario.qtd++;
     }
 
     public void setHora (byte hora) throws Exception
     {
-        if (!Horario.isValida(hora,this.minuto,this.segundo))
-            throw new Exception ("Horario invalida");
+        if (hora>23 || hora<0)
+            throw new Exception ("Hora invalida");
         this.hora=hora;
     }
 
     public void setMinuto (byte minuto) throws Exception
     {
-        if (!Horario.isValida(this.hora,minuto,this.segundo))
-            throw new Exception ("Horario invalido");
+        if (minuto>59 || minuto<0)
+            throw new Exception ("Minuto invalido");
         this.minuto=minuto;
     }
 
     public void setSegundo (byte segundo) throws Exception
     {
+        if (segundo>59 || segundo<0)
+            throw new Exception ("Segundo invalido");
         this.segundo=segundo;
     }
 
     public byte getHora ()
     {
-        if (hora>23 || hora<0)
-            throw new Exception ("Hora invalido");
-        return this.hora;
+      return this.hora;
     }
 
     public byte getMinuto ()
     {
-        if (minuto>59 || minuto<0)
-            throw new Exception ("Minuto invalido");
-        return this.minuto;
+      return this.minuto;
     }
 
     public byte getSegundo ()
     {
-        if (segundo>59 || segundo<0)
-            throw new Exception ("Segundo invalido");
-        return this.segundo;
+      return this.segundo;
     }
     
     public void adiante (int qtdSegundos) throws Exception
@@ -72,9 +56,13 @@ public class Horario
             throw new Exception ("Quantidade de segundos invalido");
         this.segundo+=qtdSegundos;
         if (segundo>59){
-            if(segundo>3600)
-              this.hora+=segundo/3600;
-            this.minuto+=segundo/60;
+          if(segundo>3600)
+            this.hora+=segundo/3600;
+             if (this.hora>23)
+              this.hora=(this.hora%24);
+          this.minuto+=segundos/60;
+            if (this.minuto>59)
+              this.hora=(this.hora%24);
             if
             this.segundo=segundo%60;
         }
@@ -100,18 +88,23 @@ public class Horario
     @Override
     public String toString()
     {
-
+        return this.hora + ":" + this.minuto + ":" + this.segundo;
     }
 
     @Override
     public boolean equals(Object obj)
     {
-
+        if(obj==this) return true;
+        if(obj==null) return false;
+        if(obj.getClass()!=this.getClass()) return false;
+        Horario time = (Horario) obj;
+        if (time.qtd!= this.qtd) return false;
+        return true;
     }
 
     @Override
     public int hashCode()
     {
-
+        return Objects.hash(this.qtd);
     }
 }
