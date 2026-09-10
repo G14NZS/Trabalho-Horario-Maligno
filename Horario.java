@@ -56,15 +56,16 @@ public class Horario
             throw new Exception ("Quantidade de segundos invalido");
         this.segundo+=qtdSegundos;
         if (segundo>59){
-          if(segundo>3600)
-            this.hora+=segundo/3600;
-             if (this.hora>23)
-              this.hora=(this.hora%24);
-          this.minuto+=segundos/60;
+            if(segundo>3600)
+                this.hora+=segundo/3600;
+            if (this.hora>23)
+                this.hora=(this.hora%24);
+                this.minuto+=(segundos%3600)/60;
             if (this.minuto>59)
-              this.hora=(this.hora%24);
-            if
-            this.segundo=segundo%60;
+                this.minuto=(this.minuto%60);
+            this.segundo+=((segundos%3600)/60);
+            if (this.minuto>59)
+                this.minuto=(this.minuto%60);
         }
     }
 
